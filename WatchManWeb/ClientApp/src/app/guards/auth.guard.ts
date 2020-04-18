@@ -19,15 +19,14 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    debugger;
 
-    if (state.url === '/analysis' || state.url === '/reports') {
+    if (this.checkAdvancedUrl(state)) {
       if (this.userData.role == UserRole.Admin || this.userData.role == UserRole.AdvancedUser) {
         return true;
       }
     }
 
-    if (state.url === '/users') {
+    if (this.checkAdminUrl(state)) {
       if (this.userData.role == UserRole.Admin) {
         return true;
       }
@@ -35,5 +34,13 @@ export class AuthGuard implements CanActivate {
 
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
     return false;
+  }
+
+  checkAdvancedUrl(state) {
+    return state.url === '/analysis' || state.url === '/reports';
+  }
+
+  checkAdminUrl(state) {
+    return state.url === '/users';
   }
 }    

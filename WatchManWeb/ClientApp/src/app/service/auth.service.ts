@@ -26,7 +26,8 @@ export class AuthService {
   setUserDetails() {
     if (localStorage.getItem('authToken')) {
       const userDetails = new User();
-      const decodeUserDetails = JSON.parse(window.atob(localStorage.getItem('authToken').split('.')[1]));
+      const token = localStorage.getItem('authToken').split('.')[1];
+      const decodeUserDetails = JSON.parse(window.atob(token));
 
       userDetails.userName = decodeUserDetails.sub;
       userDetails.firstName = decodeUserDetails.firstName;

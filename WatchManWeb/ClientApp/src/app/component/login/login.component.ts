@@ -11,15 +11,17 @@ import { AuthService } from '../../service/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  loading = false;
+  loading: boolean;
   loginForm: FormGroup;
-  submitted = false;
+  submitted: boolean;
   returnUrl: string;
 
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService) { }
+    private authService: AuthService) {
+    this.loading = false;
+    this.submitted = false;}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
