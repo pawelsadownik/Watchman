@@ -1,10 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 @Component({
-  selector: 'app-counter-component',
-  templateUrl: './counter.component.html',
-  styleUrls: ['./counter.component.css']
+  selector: 'app-monitoring-component',
+  templateUrl: './monitoring.component.html',
+  styleUrls: ['./monitoring.component.css']
 })
-export class CounterComponent {
+export class MonitoringComponent {
   name = "Angular";
   @ViewChild("videoPlayer", { static: false }) videoplayer: ElementRef;
   isPlay: boolean = false;
@@ -13,7 +13,7 @@ export class CounterComponent {
     this.videoplayer.nativeElement.play();
   }
 
- public analize() {
+  public analize() {
     let myVideo = document.getElementById("my_video_1");
     console.log("analize")
   }
