@@ -28,7 +28,8 @@ def validate_ssd300_coco(net, val_data_loader, ctx, eval_metric):
             det_scores.append(scores)
             det_bboxes.append(bboxes.clip(0, batch[0].shape[2]))
             gt_ids.append(y.slice_axis(axis=-1, begin=4, end=5))
-            gt_bboxes.append(y.slice_axis(axis=-1, begin=5, end=6) if y.shape[-1] > 5 else None)
+            gt_bboxes.append(y.slice_axis(axis=-1, begin=0, end=4))
+            gt_difficults.append(y.slice_axis(axis=-1, begin=5, end=6) if y.shape[-1] > 5 else None)
 
         eval_metric.update(det_bboxes, det_ids, det_scores, gt_bboxes, gt_ids, gt_difficults)
 

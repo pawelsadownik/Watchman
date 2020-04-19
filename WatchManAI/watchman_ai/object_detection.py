@@ -1,5 +1,6 @@
 import argparse
 from watchman_ai.models.ssd300.build_ssd300 import SSD300Builder
+from watchman_ai.models.yolov3.build_yolov3 import YoloV3Builder
 
 
 def parse_args():
@@ -44,7 +45,10 @@ if __name__ == '__main__':
     consts.CLASSES = consts.CLASSES.split(',')
     consts.LR_DECAY_EPOCH = consts.LR_DECAY_EPOCH.split(',')
     print(consts)
-
-	ssd300 = SSD300Builder(consts)
-	ssd300.train()
-
+    if 'yolo3' in consts.MODEL_NAME:
+        consts.LR_MODE = 'step'
+        consts.IN_SIZE = 416
+        model = YoloV3Builder(consts)
+    else:
+        model = SSD300Builder(consts)
+    model.train()

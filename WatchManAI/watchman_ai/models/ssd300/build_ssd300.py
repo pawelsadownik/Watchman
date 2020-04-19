@@ -33,7 +33,7 @@ class SSD300Builder:
                 self.async_net.initialize()
 
         train_data, val_data = data_loaders.get_coco_data_holders(consts)
-        self.train_data_loader, self.val_data_loader = data_loaders.get_coco_data_loaders(self.net,
+        self.train_data_loader, self.val_data_loader = data_loaders.get_coco_data_loaders(self.async_net,
                                                                                           train_data,
                                                                                           val_data,
                                                                                           consts.IN_SIZE,
