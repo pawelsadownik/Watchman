@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using WatchmanWeb.Model;
 using System;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace WatchmanWeb
 {
@@ -19,11 +20,32 @@ namespace WatchmanWeb
             Configuration = configuration;
         }
 
+        public void AddDbContext(IServiceCollection services)
+        {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                {
+                    options.UseSqlServer(
+                        Configuration["ConnectionStrings:DefaultConnection"],
+                        b => b.MigrationsAssembly("WatchmanWeb").EnableRetryOnFailure(5));
+                    options.EnableSensitiveDataLogging(true);
+
+                });
+            
+
+        }
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.PropertyNamingPolicy = null;
+                o.JsonSerializerOptions.DictionaryKeyPolicy = null;
+            });
+            AddDbContext(services);
+
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
