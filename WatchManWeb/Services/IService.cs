@@ -12,6 +12,5 @@ namespace WatchmanWeb.Services
         void Remove(Guid id);
         void Update(TEntity entity);
         TEntity GetById(Guid id);
-
     }
 }

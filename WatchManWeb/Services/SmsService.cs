@@ -12,7 +12,6 @@ namespace WatchmanWeb.Services
     }
     public class SmsService : ISmsService
     {
-
         private readonly IConfiguration _config;
 
         public SmsService(IConfiguration config)
