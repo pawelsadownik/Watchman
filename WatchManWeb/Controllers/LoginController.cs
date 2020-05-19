@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using WatchmanWeb.Model;
+using WatchmanWeb.Services;
 
 namespace WatchmanWeb.Controllers
 {
@@ -16,18 +17,12 @@ namespace WatchmanWeb.Controllers
     public class LoginController : Controller
     {
         private readonly IConfiguration _config;
-        // TO DO:
-        // Create DB with users:
-        private List<User> appUsers = new List<User>
-        {
-            new User {  FirstName = "admin",  UserName = "admin", Password = "1234", UserType = "Admin" },
-            new User {  FirstName = "advanced",  UserName = "advanced", Password = "1234", UserType = "AdvancedUser" },
-            new User {  FirstName = "basic",  UserName = "basic", Password = "1234", UserType = "BasicUser" }
-        };
+        private readonly IUserService _userService;
 
-        public LoginController(IConfiguration config)
+        public LoginController(IConfiguration config, IUserService userService)
         {
             _config = config;
+            _userService = userService;
         }
 
         [HttpPost]
@@ -50,7 +45,7 @@ namespace WatchmanWeb.Controllers
 
         User AuthenticateUser(User loginCredentials)
         {
-            User user = appUsers.SingleOrDefault(x => x.UserName == loginCredentials.UserName && x.Password == loginCredentials.Password);
+            var user = _userService.GetAll().SingleOrDefault(x => x.UserName == loginCredentials.UserName && x.Password == loginCredentials.Password);
             return user;
         }
 
