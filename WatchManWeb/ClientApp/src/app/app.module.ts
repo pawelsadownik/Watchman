@@ -9,7 +9,6 @@ import { NavMenuComponent } from './component/nav-menu/nav-menu.component';
 import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
 import { MonitoringComponent } from './component/monitoring/monitoring.component';
-import { UsersComponent } from './component/users/users.component';
 import { AnalysisComponent } from './component/analysis/analysis.component';
 
 import { HttpInterceptorService } from './service/http-interceptor.service';
@@ -17,6 +16,9 @@ import { ErrorInterceptorService } from './service/error-interceptor.service';
 
 import { AuthGuard } from './guards/auth.guard';
 import { ReportsComponent } from './component/reports/reports.component';
+import { UserFormComponent } from './component/user/user-form/user-form.component';
+import { UserListComponent } from './component/user/user-list/user-list.component';
+
 
 @NgModule({
   declarations: [
@@ -25,9 +27,10 @@ import { ReportsComponent } from './component/reports/reports.component';
     HomeComponent,
     LoginComponent,
     MonitoringComponent,
-    UsersComponent,
     AnalysisComponent,
-    ReportsComponent
+    ReportsComponent,
+    UserFormComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -38,8 +41,8 @@ import { ReportsComponent } from './component/reports/reports.component';
       { path: 'login', component: LoginComponent },
       { path: 'monitoring', component: MonitoringComponent },
       { path: 'analysis', component: AnalysisComponent, canActivate: [AuthGuard] }, 
-      { path: 'reports', component: ReportsComponent, canActivate: [AuthGuard] }, 
-      { path: 'users', component: UsersComponent, canActivate: [AuthGuard] }
+      { path: 'reports', component: ReportsComponent, canActivate: [AuthGuard] },
+      { path: 'users', component: UserListComponent, canActivate: [AuthGuard] }
     ])
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
