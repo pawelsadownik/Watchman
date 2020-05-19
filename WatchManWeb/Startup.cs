@@ -10,6 +10,8 @@ using WatchmanWeb.Model;
 using System;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using WatchmanWeb.Services;
 
 namespace WatchmanWeb
 {
@@ -22,15 +24,15 @@ namespace WatchmanWeb
 
         public void AddDbContext(IServiceCollection services)
         {
-                services.AddDbContext<ApplicationDbContext>(options =>
-                {
-                    options.UseSqlServer(
-                        Configuration["ConnectionStrings:DefaultConnection"],
-                        b => b.MigrationsAssembly("WatchmanWeb").EnableRetryOnFailure(5));
-                    options.EnableSensitiveDataLogging(true);
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(
+                    Configuration["ConnectionStrings:DefaultConnection"],
+                    b => b.MigrationsAssembly("WatchmanWeb").EnableRetryOnFailure(5));
+                options.EnableSensitiveDataLogging(true);
 
-                });
-            
+            });
+
 
         }
         public IConfiguration Configuration { get; }
@@ -79,7 +81,10 @@ namespace WatchmanWeb
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddScoped<ISmsService, SmsService>();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
