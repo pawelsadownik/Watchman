@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using WatchmanWeb.Services;
 using NetCore.AutoRegisterDi;
+using System.Reflection;
+using AutoMapper;
 
 namespace WatchmanWeb
 {
@@ -48,6 +50,7 @@ namespace WatchmanWeb
             });
             AddDbContext(services);
 
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
