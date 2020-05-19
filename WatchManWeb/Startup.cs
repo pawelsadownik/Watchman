@@ -83,6 +83,7 @@ namespace WatchmanWeb
             });
 
             services.AddScoped<ISmsService, SmsService>();
+            services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
         }
 
 
