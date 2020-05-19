@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,7 +22,7 @@ namespace WatchmanWeb.Model
 
         public async Task SeedAsync()
         {
-            if (!_context.Users.Any(user => user.UserType.Equals("admin")))
+            if (!_context.Users.Any(user => user.UserType.Equals("Admin")))
             {
                 await _context.Users.AddAsync(new User()
                 {
@@ -31,7 +30,7 @@ namespace WatchmanWeb.Model
                     UserName = "admin",
                     FirstName = "admin",
                     Password = _config["AdminPassword:password"],
-                    UserType = "admin"
+                    UserType = "Admin"
                 });
                 await _context.SaveChangesAsync();
 

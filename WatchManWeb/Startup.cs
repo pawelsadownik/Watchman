@@ -12,6 +12,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using WatchmanWeb.Services;
+using NetCore.AutoRegisterDi;
 
 namespace WatchmanWeb
 {
@@ -81,6 +82,12 @@ namespace WatchmanWeb
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.RegisterAssemblyPublicNonGenericClasses(
+                    AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(d => d.ManifestModule.Name.Equals("WatchmanWeb.dll"))
+                    )
+                    .Where(x => x.Name.EndsWith("Repository") || x.Name.EndsWith("Service"))
+                    .AsPublicImplementedInterfaces();
 
             services.AddScoped<ISmsService, SmsService>();
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
