@@ -32,8 +32,8 @@ namespace WatchmanWeb.Model
                     Password = _config["AdminPassword:password"],
                     UserType = "Admin"
                 });
-                await _context.SaveChangesAsync();
 
+                await _context.SaveChangesAsync();
             }
         }
     }
