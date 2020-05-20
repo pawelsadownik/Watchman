@@ -3,8 +3,7 @@ import mxnet as mx
 from mxnet import autograd
 from mxnet.gluon import Trainer, utils
 from gluoncv.loss import SSDMultiBoxLoss
-from watchman_ai.models.ssd300.validators import validate_ssd300_coco
-from watchman_ai.models.ssd300.serializers import save_params
+from watchman_ai.models.common import validators, serializers
 
 
 def train_ssd300_coco(net, train_data_loader, val_data_loader, eval_metric, ctx, consts, logger):
@@ -79,11 +78,11 @@ def train_ssd300_coco(net, train_data_loader, val_data_loader, eval_metric, ctx,
                     f'{ce_name}={ce_loss:.3f}, {sl1_name}={sl1_loss:.3f}')
 
         if not epoch % consts.VAL_INTERVAL or not epoch % consts.SAVE_INTERVAL:
-            mean_avg_prec_name, mean_avg_prec = validate_ssd300_coco(net, val_data_loader, ctx, eval_metric)
+            mean_avg_prec_name, mean_avg_prec = validators.validate_topology_coco(net, val_data_loader, ctx, eval_metric)
             val_msg = '\n'.join([f'{k}={v}' for k, v in zip(mean_avg_prec_name, mean_avg_prec)])
             logger.info(f'[Epoch {epoch}] validation: \n{val_msg}')
             curr_mean_avg_prec = float(mean_avg_prec[-1])
         else:
             curr_mean_avg_prec = 0
 
-        save_params(net, best_mean_avg_prec, curr_mean_avg_prec, epoch, consts.SAVE_INTERVAL, consts.SAVE_PREFIX)
+        serializers.save_params(net, best_mean_avg_prec, curr_mean_avg_prec, epoch, consts.SAVE_INTERVAL, consts.SAVE_PREFIX)

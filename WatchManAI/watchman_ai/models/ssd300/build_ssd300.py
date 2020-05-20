@@ -3,7 +3,9 @@ import mxnet as mx
 import gluoncv.utils as gutils
 from mxnet.gluon.nn import BatchNorm
 from gluoncv.model_zoo import ssd_300_vgg16_atrous_custom
-from watchman_ai.models.ssd300 import serializers, data_loaders, validators, trainers
+from watchman_ai.models.common import serializers
+from watchman_ai.models.ssd300 import data_loaders, trainers
+from watchman_ai.models.common import validators
 from watchman_ai.tools.logger import get_logger
 
 

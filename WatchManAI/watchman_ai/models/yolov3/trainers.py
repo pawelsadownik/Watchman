@@ -2,8 +2,7 @@ import time
 import mxnet as mx
 from mxnet import gluon, autograd
 from gluoncv.utils import LRScheduler, LRSequential
-from watchman_ai.models.yolov3.validators import validate_yolov3_coco
-from watchman_ai.models.yolov3.serializers import save_params
+from watchman_ai.models.common import validators, serializers
 
 
 def train(net, train_data_loader, val_data_loader, eval_metric, ctx, consts, logger):
@@ -86,11 +85,11 @@ def train(net, train_data_loader, val_data_loader, eval_metric, ctx, consts, log
                     f'{scale_name}={scale_loss}, {cls_name}={cls_loss}')
 
         if not epoch % consts.VAL_INTERVAL or not epoch % consts.SAVE_INTERVAL:
-            mean_avg_prec_name, mean_avg_prec = validate_yolov3_coco(net, val_data_loader, ctx, eval_metric)
+            mean_avg_prec_name, mean_avg_prec = validators.validate_topology_coco(net, val_data_loader, ctx, eval_metric)
             val_msg = '\n'.join([f'{k}={v}' for k, v in zip(mean_avg_prec_name, mean_avg_prec)])
             logger.info(f'[Epoch {epoch}] validation: \n{val_msg}')
             curr_mean_avg_prec = float(mean_avg_prec[-1])
         else:
             curr_mean_avg_prec = 0
 
-        save_params(net, best_mean_avg_prec, curr_mean_avg_prec, epoch, consts.SAVE_INTERVAL, consts.SAVE_PREFIX)
+        serializers.save_params(net, best_mean_avg_prec, curr_mean_avg_prec, epoch, consts.SAVE_INTERVAL, consts.SAVE_PREFIX)

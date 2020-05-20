@@ -11,7 +11,7 @@ def get_coco_validation_metric(val_data, consts):
     return val_metric
 
 
-def validate_yolov3_coco(net, val_data_loader, ctx, eval_metric):
+def validate_topology_coco(net, val_data_loader, ctx, eval_metric):
     eval_metric.reset()
     net.set_nms(nms_thresh=0.45, nms_topk=400)
     mx.nd.waitall()

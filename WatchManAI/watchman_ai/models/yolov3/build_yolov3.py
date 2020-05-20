@@ -3,7 +3,9 @@ import mxnet as mx
 import gluoncv.utils as gutils
 from mxnet.gluon.nn import BatchNorm
 from gluoncv.model_zoo import yolo3_darknet53_coco
-from watchman_ai.models.yolov3 import serializers, data_loaders, validators, trainers
+from watchman_ai.models.common import serializers
+from watchman_ai.models.yolov3 import data_loaders, trainers
+from watchman_ai.models.common import validators
 from watchman_ai.tools.logger import get_logger
 
 

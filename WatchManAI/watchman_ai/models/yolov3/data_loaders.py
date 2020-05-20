@@ -1,4 +1,3 @@
-import mxnet as mx
 from mxnet import gluon
 from gluoncv.data import COCODetection
 from gluoncv.data.batchify import Tuple, Stack, Pad
