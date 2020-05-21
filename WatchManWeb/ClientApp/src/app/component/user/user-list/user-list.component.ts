@@ -35,13 +35,13 @@ export class UserListComponent extends BaseComponent implements OnInit {
   }
 
 
-  //remove(id: string) {
-  //  this.safeSub(
-  //    this.userService.delete(id).subscribe(
-  //      () => {
-  //        this.userService.refresh();
-  //      })
-  //  );
-  //}
+  remove(id: string) {
+    this.safeSub(
+      this.userService.delete(id).subscribe(
+        () => {
+          this.userService.refresh();
+        })
+    );
+  }
 
 }

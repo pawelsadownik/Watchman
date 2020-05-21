@@ -18,7 +18,7 @@
       <td>{{user.UserType}}</td>
       <td>
         <p-button label="Edit" styleClass="ui-button-warning" [routerLink]="['/users/details', user.Id]"></p-button>
-        <p-button label="Remove" styleClass="ui-button-danger"></p-button>
+        <p-button label="Remove" styleClass="ui-button-danger" (click)="remove(user.Id)"></p-button>
       </td>
     </tr>
   </ng-template>
