@@ -41,6 +41,6 @@ export class AuthGuard implements CanActivate {
   }
 
   checkAdminUrl(state) {
-    return state.url === '/users';
+    return state.url === '/users/list';
   }
 }    

@@ -1,1 +1,25 @@
-<p>user-list works!</p>
+<div>
+  <p-button label="Create User" styleClass="ui-button-info" [routerLink]="['/users/details']"></p-button>
+</div>
+<p-table [value]="users">
+  <ng-template pTemplate="caption">
+    Users List
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Username</th>
+      <th>Type</th>
+      <th>Action</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-user>
+    <tr>
+      <td>{{user.UserName}}</td>
+      <td>{{user.UserType}}</td>
+      <td>
+        <p-button label="Edit" styleClass="ui-button-warning" [routerLink]="['/users/details', user.Id]"></p-button>
+        <p-button label="Remove" styleClass="ui-button-danger" (click)="remove(user.Id)"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

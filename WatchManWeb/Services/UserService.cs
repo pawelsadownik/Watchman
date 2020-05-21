@@ -30,7 +30,7 @@ namespace WatchmanWeb.Services
 
         public List<User> GetAll()
         {
-            return _UserRepository.GetAll().ToList();
+            return _UserRepository.GetAll().Where(user => user.UserType != "Admin").ToList();
         }
 
         public User GetById(Guid id)
