@@ -51,49 +51,49 @@ namespace WatchmanWeb.Model
                 {
                     Id = new Guid(),
                     Flag = "red",
-                    Timestampt = DateTime.Now,
+                    Timestamp = DateTime.Now,
                     CameraInfo = "Cam1"
                 }, new Incident()
                 {
                     Id = new Guid(),
                     Flag = "yellow",
-                    Timestampt = DateTime.Now.AddDays(-1),
+                    Timestamp = DateTime.Now.AddDays(-1),
                     CameraInfo = "Cam1"
                 }, new Incident()
                 {
                     Id = new Guid(),
                     Flag = "red",
-                    Timestampt = DateTime.Now.AddDays(-2),
+                    Timestamp = DateTime.Now.AddDays(-2),
                     CameraInfo = "Cam2"
                 }, new Incident()
                 {
                     Id = new Guid(),
                     Flag = "yellow",
-                    Timestampt = DateTime.Now.AddDays(-3),
+                    Timestamp = DateTime.Now.AddDays(-3),
                     CameraInfo = "Cam2"
                 }, new Incident()
                 {
                     Id = new Guid(),
                     Flag = "red",
-                    Timestampt = DateTime.Now.AddDays(-4),
+                    Timestamp = DateTime.Now.AddDays(-4),
                     CameraInfo = "Cam3"
                 }, new Incident()
                 {
                     Id = new Guid(),
                     Flag = "yellow",
-                    Timestampt = DateTime.Now.AddDays(-5),
+                    Timestamp = DateTime.Now.AddDays(-5),
                     CameraInfo = "Cam3"
                 }, new Incident()
                 {
                     Id = new Guid(),
                     Flag = "red",
-                    Timestampt = DateTime.Now.AddDays(-6),
+                    Timestamp = DateTime.Now.AddDays(-6),
                     CameraInfo = "Cam4"
                 }, new Incident()
                 {
                     Id = new Guid(),
                     Flag = "yellow",
-                    Timestampt = DateTime.Now.AddDays(-7),
+                    Timestamp = DateTime.Now.AddDays(-7),
                     CameraInfo = "Cam4"
                 }
                 );

@@ -34,7 +34,7 @@ namespace WatchmanWeb.Migrations
                     b.Property<string>("Flag")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Timestampt")
+                    b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdatedDate")

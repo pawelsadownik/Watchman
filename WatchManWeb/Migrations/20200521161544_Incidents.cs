@@ -15,7 +15,7 @@ namespace WatchmanWeb.Migrations
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     Flag = table.Column<string>(nullable: true),
-                    Timestampt = table.Column<DateTime>(nullable: false),
+                    Timestamp = table.Column<DateTime>(nullable: false),
                     CameraInfo = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

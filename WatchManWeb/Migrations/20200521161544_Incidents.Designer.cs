@@ -10,7 +10,7 @@ using WatchmanWeb;
 namespace WatchmanWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200521153456_Incidents")]
+    [Migration("20200521161544_Incidents")]
     partial class Incidents
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,7 @@ namespace WatchmanWeb.Migrations
                     b.Property<string>("Flag")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Timestampt")
+                    b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdatedDate")

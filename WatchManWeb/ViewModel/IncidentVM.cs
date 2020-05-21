@@ -8,7 +8,7 @@ namespace WatchmanWeb.ViewModel
     public class IncidentVM : EntityVM
     {
         public string Flag { get; set; }
-        public DateTime Timestampt { get; set; }
+        public DateTime Timestamp { get; set; }
         public string CameraInfo { get; set; }
     }
 }

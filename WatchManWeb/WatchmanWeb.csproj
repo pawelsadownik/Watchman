@@ -44,7 +44,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\service\" />
+    <Compile Remove="Migrations\20200521153456_Incidents.cs" />
+    <Compile Remove="Migrations\20200521153456_Incidents.Designer.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
