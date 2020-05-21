@@ -28,4 +28,9 @@ export class IncidentService {
     }
     return this.incidents$;
   }
+
+  public getPdf() {
+    window.open(this.url + '/pdfcreator');
+    return this.http.get(this.url + '/pdfcreator');
+  }
 }    

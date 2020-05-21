@@ -15,6 +15,8 @@ using WatchmanWeb.Services;
 using NetCore.AutoRegisterDi;
 using System.Reflection;
 using AutoMapper;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 
 namespace WatchmanWeb
 {
@@ -33,9 +35,7 @@ namespace WatchmanWeb
                     Configuration["ConnectionStrings:DefaultConnection"],
                     b => b.MigrationsAssembly("WatchmanWeb").EnableRetryOnFailure(5));
                 options.EnableSensitiveDataLogging(true);
-
             });
-
 
         }
         public IConfiguration Configuration { get; }
@@ -94,8 +94,8 @@ namespace WatchmanWeb
 
             services.AddScoped<ISmsService, SmsService>();
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
         }
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
