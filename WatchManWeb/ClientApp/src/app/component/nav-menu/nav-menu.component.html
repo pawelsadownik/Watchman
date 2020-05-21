@@ -21,7 +21,7 @@
             <a class="nav-link text-dark" *ngIf="userData.isLoggedIn && (userData.role==userRole.AdvancedUser || userData.role==userRole.Admin)" [routerLink]='["/reports"]'>Reports</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link text-dark" *ngIf="userData.isLoggedIn && userData.role==userRole.Admin" [routerLink]='["/users"]'>Users</a>
+            <a class="nav-link text-dark" *ngIf="userData.isLoggedIn && userData.role==userRole.Admin" [routerLink]='["/users/list"]'>Users</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" *ngIf="userData.isLoggedIn" (click)=logout() [routerLink]=''>Logout</a>

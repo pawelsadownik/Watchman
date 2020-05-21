@@ -1,1 +1,52 @@
-<p>user-form works!</p>
+<h3 class="first">USER:</h3>
+<div>
+  <form [formGroup]="form" (ngSubmit)="onFormSubmit(form.value)">
+    <input type="hidden" formControlName="Id">
+    <div class="ui-g ui-fluid">
+
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+          <span class="ui-float-label">
+            <input id="float-input" type="text" size="30" pInputText formControlName="UserName">
+            <label for="float-input">Username</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+          <span class="ui-float-label">
+            <input id="float-input" type="text" size="30" pInputText formControlName="FirstName">
+            <label for="float-input">First Name</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+          <span class="ui-float-label">
+            <input id="float-input" type="text" size="30" pInputText formControlName="Password">
+            <label for="float-input">Password</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+          <span class="ui-float-label">
+            <input id="float-input" type="text" size="30" pInputText formControlName="UserType">
+            <label for="float-input">User Type</label>
+          </span>
+        </div>
+      </div>
+
+
+      <button pButton type="submit" class="ui-button-success" icon="fa-floppy-o" label="Save" [disabled]="!form.valid"></button>
+
+    </div>
+  </form>
+</div>
