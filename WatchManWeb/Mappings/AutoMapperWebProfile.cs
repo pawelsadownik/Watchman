@@ -14,6 +14,9 @@ namespace WatchmanWeb.Mappings
 
             CreateMap<User, UserVM>();
             CreateMap<UserVM, User>();
+
+            CreateMap<Incident, IncidentVM>();
+            CreateMap<IncidentVM, Incident>();
         }
     }
 }

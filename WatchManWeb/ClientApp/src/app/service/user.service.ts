@@ -25,13 +25,6 @@ export class UserService {
     });
   }
 
-  getHeroes(): Observable<UserData[]> {
-    return this.http.get<UserData[]>(this.url)
-      .pipe(
-        tap()
-      );
-  }
-
   public getAll(): Observable<UserData[]> {
     if (this.userData.length === 0) {
       this.refresh();

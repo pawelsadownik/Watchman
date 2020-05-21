@@ -22,6 +22,12 @@ namespace WatchmanWeb.Model
 
         public async Task SeedAsync()
         {
+            await SeedUSers();
+            await SeedIncidents();
+        }
+
+        public async Task SeedUSers()
+        {
             if (!_context.Users.Any(user => user.UserType.Equals("Admin")))
             {
                 await _context.Users.AddAsync(new User()
@@ -32,6 +38,65 @@ namespace WatchmanWeb.Model
                     Password = _config["AdminPassword:password"],
                     UserType = "Admin"
                 });
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task SeedIncidents()
+        {
+            if (!_context.Incidents.Any())
+            {
+                await _context.Incidents.AddRangeAsync(new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "red",
+                    Timestamp = DateTime.Now,
+                    CameraInfo = "Cam1"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "yellow",
+                    Timestamp = DateTime.Now.AddDays(-1),
+                    CameraInfo = "Cam1"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "red",
+                    Timestamp = DateTime.Now.AddDays(-2),
+                    CameraInfo = "Cam2"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "yellow",
+                    Timestamp = DateTime.Now.AddDays(-3),
+                    CameraInfo = "Cam2"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "red",
+                    Timestamp = DateTime.Now.AddDays(-4),
+                    CameraInfo = "Cam3"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "yellow",
+                    Timestamp = DateTime.Now.AddDays(-5),
+                    CameraInfo = "Cam3"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "red",
+                    Timestamp = DateTime.Now.AddDays(-6),
+                    CameraInfo = "Cam4"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "yellow",
+                    Timestamp = DateTime.Now.AddDays(-7),
+                    CameraInfo = "Cam4"
+                }
+                );
 
                 await _context.SaveChangesAsync();
             }
