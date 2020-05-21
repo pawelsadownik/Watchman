@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using WatchmanWeb.Model;
 using WatchmanWeb.Services;
 using WatchmanWeb.ViewModel;
 
@@ -13,11 +12,16 @@ namespace WatchmanWeb.Controllers
     public class IncidentsController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly IIncidentService _incidentService;
+        private readonly IPdfService _pdfService;
         private readonly IMapper _mapper;
-        public IncidentsController(IIncidentService incidentService, IMapper mapper)
+        private IConverter _converter;
+
+        public IncidentsController(IIncidentService incidentService, IMapper mapper, IConverter converter, IPdfService pdfService)
         {
             _incidentService = incidentService;
             _mapper = mapper;
+            _converter = converter;
+            _pdfService = pdfService;
         }
 
         [HttpGet]
@@ -26,38 +30,15 @@ namespace WatchmanWeb.Controllers
             return _mapper.Map<List<IncidentVM>>(_incidentService.GetAll());
         }
 
-        [HttpGet("{id}")]
-        public IncidentVM GetById(Guid id)
+        [HttpGet("pdfcreator")]
+        public IActionResult CreatePDF()
         {
-            var incident = _incidentService.GetById(id);
-            return _mapper.Map<IncidentVM>(incident);
-        }
+            var pdf = _pdfService.getPdf();
 
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] IncidentVM incidentVM)
-        {
-            var incident = _mapper.Map<Incident>(incidentVM);
+            var file = _converter.Convert(pdf);
+            var reportName = "Raport nr " + DateTime.Now.ToString("dd.MM.yyyy") + "-" + DateTime.Now.Millisecond + ".pdf";
 
-            _incidentService.Add(incident);
-            return Created("/api/Incident", _mapper.Map<IncidentVM>(incident).Id);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            _incidentService.Remove(id);
-            return Ok();
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] IncidentVM incidentVM)
-        {
-            if (incidentVM == null)
-            {
-                return BadRequest();
-            }
-            _incidentService.Update(_mapper.Map<Incident>(incidentVM));
-            return Ok();
+            return File(file, "application/pdf", reportName);
         }
     }
 }

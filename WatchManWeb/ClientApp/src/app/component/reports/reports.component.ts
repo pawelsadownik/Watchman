@@ -33,6 +33,14 @@ export class ReportsComponent extends BaseComponent implements OnInit {
   }
 
   generateChart() { }
-  generatePdf() { }
 
+
+  generatePdf() {
+    this.incidentService.getPdf()
+      .subscribe(res => {
+      },
+        err => {
+          console.log(err);
+        })
+  }
 }
