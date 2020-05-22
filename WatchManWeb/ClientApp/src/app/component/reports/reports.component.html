@@ -1,4 +1,6 @@
 <p-button label="Generate PDF" styleClass="ui-button-info" (click)="generatePdf()"></p-button>
+<p-button label="Generate Chart" styleClass="ui-button-info" (click)="generateChart()"></p-button>
+<div id="chartdiv" visibility="invisible" style="width: 100%; height: 500px"></div>
 
 <p-table [value]="incidents">
   <ng-template pTemplate="caption">

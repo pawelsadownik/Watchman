@@ -74,6 +74,42 @@ namespace WatchmanWeb.Model
                 }, new Incident()
                 {
                     Id = new Guid(),
+                    Flag = "yellow",
+                    Timestamp = DateTime.Now.AddDays(-1),
+                    CameraInfo = "Cam1"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "red",
+                    Timestamp = DateTime.Now.AddDays(-2),
+                    CameraInfo = "Cam2"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "yellow",
+                    Timestamp = DateTime.Now.AddDays(-3),
+                    CameraInfo = "Cam2"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "yellow",
+                    Timestamp = DateTime.Now.AddDays(-1),
+                    CameraInfo = "Cam1"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "red",
+                    Timestamp = DateTime.Now.AddDays(-2),
+                    CameraInfo = "Cam2"
+                }, new Incident()
+                {
+                    Id = new Guid(),
+                    Flag = "yellow",
+                    Timestamp = DateTime.Now.AddDays(-3),
+                    CameraInfo = "Cam2"
+                }, new Incident()
+                {
+                    Id = new Guid(),
                     Flag = "red",
                     Timestamp = DateTime.Now.AddDays(-4),
                     CameraInfo = "Cam3"
