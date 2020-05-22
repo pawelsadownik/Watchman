@@ -4,6 +4,7 @@ import { Incident } from '../../model/incident';
 import { IncidentService } from '../../service/incident.service';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
+import { ChartData } from '../../model/ChartData';
 
 @Component({
   selector: 'app-reports',
@@ -12,9 +13,10 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 })
 export class ReportsComponent extends BaseComponent implements OnInit {
 
-  incidents: Incident[] = [];
+  incidents: Incident[];
   cols: any[];
   private chart: am4charts.XYChart;
+  input: ChartData[];
 
   constructor(
     public incidentService: IncidentService,
@@ -25,6 +27,7 @@ export class ReportsComponent extends BaseComponent implements OnInit {
       this.incidentService.getAll().subscribe(
         (incidents) => {
           this.incidents = incidents;
+          this.countData();
           this.generateChart();
         }
       )
@@ -66,42 +69,19 @@ export class ReportsComponent extends BaseComponent implements OnInit {
         }
         if (series.name == 'YELLOW') {
           series.columns.template.stroke = am4core.color("#ebe700"); // red outline
-          series.columns.template.fill = am4core.color("#ebe700");        }
-
-        //series.events.on("hidden", arrangeColumns);
-        //series.events.on("shown", arrangeColumns);
+          series.columns.template.fill = am4core.color("#ebe700");
+        }
 
         let bullet = series.bullets.push(new am4charts.LabelBullet())
         bullet.interactionsEnabled = false
         bullet.dy = 30;
         bullet.label.text = '{valueY}'
         bullet.label.fill = am4core.color('#ffffff')
-        
+
         return series;
       }
 
-      chart.data = [
-        {
-          category: 'Cam #1',
-          red: 40,
-          yellow: 55
-        },
-        {
-          category: 'Cam #2',
-          red: 30,
-          yellow: 78
-        },
-        {
-          category: 'Cam #3',
-          red: 27,
-          yellow: 40
-        },
-        {
-          category: 'Cam #4',
-          red: 50,
-          yellow: 33
-        }
-      ]
+      chart.data = this.input;
 
       createSeries('red', 'RED');
       createSeries('yellow', 'YELLOW');
@@ -118,7 +98,27 @@ export class ReportsComponent extends BaseComponent implements OnInit {
         })
   }
 
-  countIncidents() {
+  countData() {
+    this.input = [];
+    this.incidents
+      .filter((v, i, a) => a.findIndex(t => (t.CameraInfo === v.CameraInfo)) === i)
+      .map(({ CameraInfo }) =>
+        this.input.push(new ChartData({
+          category: CameraInfo,
+          red: 0,
+          yellow: 0
+        })
+        )
+      );
 
+    this.incidents.forEach(incident => {
+      if (incident.Flag === "red") {
+        this.input.find(data => data.category === incident.CameraInfo).red += 1;
+      }
+
+      if (incident.Flag === "yellow") {
+        this.input.find(data => data.category === incident.CameraInfo).yellow += 1;
+      }
+    })
   }
 }
