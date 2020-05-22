@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WatchmanWeb.Model;
 using WatchmanWeb.Services;
@@ -23,7 +24,7 @@ namespace WatchmanWeb.Controllers
         [HttpGet]
         public List<UserVM> GetAll()
         {
-            return _mapper.Map<List<UserVM>>(_userService.GetAll());
+            return _mapper.Map<List<UserVM>>(_userService.GetAll().Where(user => user.UserType != "Admin"));
         }
 
         [HttpGet("{id}")]
