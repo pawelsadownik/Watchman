@@ -1,0 +1,30 @@
+{
+  "DATASET_NAME": "coco",
+  "DATA_PATH": "~/.mxnet/datasets/coco",
+  "TRAIN_DATA_NAME": "instances_train2017",
+  "VAL_DATA_NAME": "instances_val2017",
+  "SEED": 233,
+  "USE_GPU": true,
+  "IN_SIZE": 416,
+  "BATCH_SIZE": 64,
+  "NUM_WORKERS": 4,
+  "LR": 0.001,
+  "LR_MODE": "step",
+  "LR_DECAY_EPOCH": [
+    160,
+    180
+  ],
+  "LR_DECAY": 0.1,
+  "EPOCHS": 200,
+  "WD": 0.0005,
+  "MOMENTUM": 0.9,
+  "LOG_INTERVAL": 100,
+  "VAL_INTERVAL": 1,
+  "SAVE_INTERVAL": 20,
+  "SAVE_PREFIX": "yolov3",
+  "VAL_METRIC_F_NAME": "yolov3_eval",
+  "LOG_F_PATH": "yolov3_train.log",
+  "RESUME_TRAINING": false,
+  "PARAMS_PATH": "",
+  "START_EPOCH": 0
+}

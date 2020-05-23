@@ -1,6 +1,6 @@
 import argparse
-from watchman_ai.models.ssd300.build_ssd300 import SSD300Builder
-from watchman_ai.models.yolov3.build_yolov3 import YoloV3Builder
+from watchman_ai.training.models.ssd300.ssd300_trainer import SSD300Builder
+from watchman_ai.training.models.yolov3.yolov3_trainer import YoloV3Builder
 
 
 def parse_args():
