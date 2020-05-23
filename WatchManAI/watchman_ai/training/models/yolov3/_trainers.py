@@ -5,12 +5,12 @@ from gluoncv.utils import LRScheduler, LRSequential
 from watchman_ai.training.models.common import _serializers, _validators
 
 
-def train(net, train_data_loader, val_data_loader, eval_metric, ctx, consts, logger):
+def train(net, train_data_loader, val_data_loader, eval_metric, ctx, num_samples, consts, logger):
     net.collect_params().reset_ctx(ctx)
     warmup_epoch = 0
     lr_decay_epoch = [int(i) for i in consts.LR_DECAY_EPOCH]
     lr_decay_epoch = [e - warmup_epoch for e in lr_decay_epoch]
-    n_batches = consts.NUM_SAMPLES // consts.BATCH_SIZE
+    n_batches = num_samples // consts.BATCH_SIZE
     lr_scheduler = LRSequential([LRScheduler('linear', base_lr=0, target_lr=consts.LR,
                                              nepochs=1, iters_per_epoch=n_batches),
                                  LRScheduler(consts.LR_MODE, base_lr=consts.LR, nepochs=consts.EPOCHS - warmup_epoch,

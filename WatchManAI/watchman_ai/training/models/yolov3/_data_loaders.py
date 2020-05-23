@@ -7,7 +7,6 @@ from gluoncv.data.transforms.presets.yolo import YOLO3DefaultTrainTransform, YOL
 def get_coco_data_holders(consts):
     train_data = _get_coco_train_data(consts)
     val_data = _get_coco_val_data(consts)
-    consts.NUM_SAMPLES = len(train_data)
     return train_data, val_data
 
 

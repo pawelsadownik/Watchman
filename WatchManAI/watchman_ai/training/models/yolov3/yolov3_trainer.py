@@ -31,6 +31,7 @@ class YoloV3Builder:
                 self.async_net.initialize()
 
         train_data, val_data = _data_loaders.get_coco_data_holders(consts)
+        self.num_samples = len(train_data)
         self.train_data_loader, self.val_data_loader = _data_loaders.get_coco_data_loaders(self.async_net,
                                                                                            train_data,
                                                                                            val_data,
@@ -47,5 +48,6 @@ class YoloV3Builder:
                         self.val_data_loader,
                         self.eval_metric,
                         self.ctx,
+                        self.num_samples,
                         self.consts,
                         self.logger)
