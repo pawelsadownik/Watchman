@@ -2,7 +2,7 @@ import warnings
 import mxnet as mx
 import gluoncv.utils as gutils
 from mxnet.gluon.nn import BatchNorm
-from gluoncv.model_zoo import ssd_300_vgg16_atrous_custom
+from gluoncv.model_zoo import ssd_300_vgg16_atrous_coco
 from watchman_ai.training.models.common import _serializers, _validators
 from watchman_ai.training.models.ssd300 import _data_loaders, _trainers
 from watchman_ai.training.tools.logger import get_logger
@@ -20,9 +20,7 @@ class SSD300Trainer:
         gutils.random.seed(consts.SEED)
         # distributed training is not supported - we can only use GPU with id=0
         self.ctx = [mx.gpu(0)] if consts.USE_GPU else [mx.cpu()]
-        self.net = ssd_300_vgg16_atrous_custom(classes=consts.CLASSES,
-                                               pretrained_base=True,
-                                               norm_layer=BatchNorm)
+        self.net = ssd_300_vgg16_atrous_coco(pretrained_base=True, norm_layer=BatchNorm)
         self.async_net = self.net
 
         if consts.RESUME_TRAINING:
