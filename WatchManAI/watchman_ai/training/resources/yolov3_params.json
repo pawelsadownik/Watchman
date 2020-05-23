@@ -23,7 +23,7 @@
   "SAVE_INTERVAL": 20,
   "SAVE_PREFIX": "yolov3",
   "VAL_METRIC_F_NAME": "yolov3_eval",
-  "LOG_F_PATH": "yolov3_train.log",
+  "LOG_F_NAME": "yolov3_train.log",
   "RESUME_TRAINING": false,
   "PARAMS_PATH": "",
   "START_EPOCH": 0

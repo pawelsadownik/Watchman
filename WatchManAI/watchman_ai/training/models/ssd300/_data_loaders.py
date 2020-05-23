@@ -8,20 +8,27 @@ from gluoncv.data.transforms.presets.ssd import SSDDefaultTrainTransform, SSDDef
 def get_coco_data_holders(consts):
     train_data = _get_coco_train_data(consts)
     val_data = _get_coco_val_data(consts)
+
     return train_data, val_data
 
 
 def _get_coco_train_data(consts):
     train_data = COCODetection(root=consts.DATA_PATH, splits=consts.TRAIN_DATA_NAME)
+
     return train_data
 
 
 def _get_coco_val_data(consts):
     val_data = COCODetection(root=consts.DATA_PATH, splits=consts.VAL_DATA_NAME, skip_empty=False)
+
     return val_data
 
 
-def get_coco_data_loaders(net, train_data, val_data, in_size, bs, n_workers, ctx):
+def get_coco_data_loaders(net, train_data, val_data, consts, ctx):
+    in_size = consts.IN_SIZE
+    bs = consts.BATCH_SIZE
+    n_workers = consts.NUM_WORKERS
+
     with autograd.train_mode():
         fake_in_size = 1
         channels = 3

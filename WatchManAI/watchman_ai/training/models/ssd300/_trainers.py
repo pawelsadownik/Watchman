@@ -17,7 +17,7 @@ def train_ssd300_coco(net, train_data_loader, val_data_loader, eval_metric, ctx,
                             })
 
     lr_decay = float(consts.LR_DECAY)
-    lr_steps = sorted([float(ls) for ls in consts.LR_DECAY_EPOCH if ls.strip()])
+    lr_steps = sorted([float(ls) for ls in consts.LR_DECAY_EPOCH])
 
     mbox_loss = SSDMultiBoxLoss()
     ce_metric = mx.metric.Loss('CrossEntropy')

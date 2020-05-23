@@ -22,7 +22,7 @@
   "SAVE_INTERVAL": 20,
   "SAVE_PREFIX": "ssd300",
   "VAL_METRIC_F_NAME": "ssd300_eval",
-  "LOG_F_PATH": "ssd300_train.log",
+  "LOG_F_NAME": "ssd300_train.log",
   "RESUME_TRAINING": false,
   "PARAMS_PATH": "",
   "START_EPOCH": 0

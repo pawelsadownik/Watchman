@@ -5,18 +5,12 @@ from mxnet.gluon.nn import BatchNorm
 from gluoncv.model_zoo import ssd_300_vgg16_atrous_coco
 from watchman_ai.training.models.common import _serializers, _validators
 from watchman_ai.training.models.ssd300 import _data_loaders, _trainers
-from watchman_ai.training.tools.logger import get_logger
+from watchman_ai.training.tools import logger
 
 
 class SSD300Trainer:
 
-    supported_datasets = ['coco']
-
     def __init__(self, consts):
-        dataset_name_cleaned = consts.DATASET_NAME.strip().lower()
-        if dataset_name_cleaned not in SSD300Trainer.supported_datasets:
-            pass  # TODO: prepare custom exception to raise
-
         gutils.random.seed(consts.SEED)
         # distributed training is not supported - we can only use GPU with id=0
         self.ctx = [mx.gpu(0)] if consts.USE_GPU else [mx.cpu()]
@@ -35,12 +29,10 @@ class SSD300Trainer:
         self.train_data_loader, self.val_data_loader = _data_loaders.get_coco_data_loaders(self.async_net,
                                                                                            train_data,
                                                                                            val_data,
-                                                                                           consts.IN_SIZE,
-                                                                                           consts.BATCH_SIZE,
-                                                                                           consts.NUM_WORKERS,
+                                                                                           consts,
                                                                                            self.ctx[0])
         self.eval_metric = _validators.get_coco_validation_metric(val_data, consts)
-        self.logger = get_logger(consts)
+        self.logger = logger.get_logger(consts.LOG_F_NAME)
         self.consts = consts
 
     def train(self):

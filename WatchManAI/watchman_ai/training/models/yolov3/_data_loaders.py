@@ -7,20 +7,27 @@ from gluoncv.data.transforms.presets.yolo import YOLO3DefaultTrainTransform, YOL
 def get_coco_data_holders(consts):
     train_data = _get_coco_train_data(consts)
     val_data = _get_coco_val_data(consts)
+
     return train_data, val_data
 
 
 def _get_coco_train_data(consts):
     train_data = COCODetection(root=consts.DATA_PATH, splits=consts.TRAIN_DATA_NAME, use_crowd=False)
+
     return train_data
 
 
 def _get_coco_val_data(consts):
     val_data = COCODetection(root=consts.DATA_PATH, splits=consts.VAL_DATA_NAME, skip_empty=False)
+
     return val_data
 
 
-def get_coco_data_loaders(net, train_data, val_data, in_size, bs, n_workers):
+def get_coco_data_loaders(net, train_data, val_data, consts):
+    in_size = consts.IN_SIZE
+    bs = consts.BATCH_SIZE
+    n_workers = consts.NUM_WORKERS
+
     train_batchify_fn = Tuple(*([Stack() for _ in range(6)] + [Pad(pad_val=-1) for _ in range(1)]))
     train_data_transformed = train_data.transform(YOLO3DefaultTrainTransform(in_size, in_size, net, mixup=False))
     train_data_loader = gluon.data.DataLoader(train_data_transformed,

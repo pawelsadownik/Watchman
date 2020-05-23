@@ -8,6 +8,7 @@ def get_coco_validation_metric(val_data, consts):
                                      consts.VAL_METRIC_F_NAME,
                                      cleanup=True,
                                      data_shape=(consts.IN_SIZE, consts.IN_SIZE))
+
     return val_metric
 
 

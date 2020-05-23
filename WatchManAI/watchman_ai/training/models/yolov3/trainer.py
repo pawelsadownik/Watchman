@@ -4,18 +4,12 @@ import gluoncv.utils as gutils
 from gluoncv.model_zoo import yolo3_darknet53_coco
 from watchman_ai.training.models.common import _serializers, _validators
 from watchman_ai.training.models.yolov3 import _trainers, _data_loaders
-from watchman_ai.training.tools.logger import get_logger
+from watchman_ai.training.tools import logger
 
 
 class YoloV3Trainer:
 
-    supported_datasets = ['coco']
-
     def __init__(self, consts):
-        dataset_name_cleaned = consts.DATASET_NAME.strip().lower()
-        if dataset_name_cleaned not in YoloV3Trainer.supported_datasets:
-            pass  # TODO: prepare custom exception to raise
-
         gutils.random.seed(consts.SEED)
         # distributed training is not supported - we can only use GPU with id=0
         self.ctx = [mx.gpu(0)] if consts.USE_GPU else [mx.cpu()]
@@ -35,11 +29,9 @@ class YoloV3Trainer:
         self.train_data_loader, self.val_data_loader = _data_loaders.get_coco_data_loaders(self.async_net,
                                                                                            train_data,
                                                                                            val_data,
-                                                                                           consts.IN_SIZE,
-                                                                                           consts.BATCH_SIZE,
-                                                                                           consts.NUM_WORKERS)
+                                                                                           consts)
         self.eval_metric = _validators.get_coco_validation_metric(val_data, consts)
-        self.logger = get_logger(consts)
+        self.logger = logger.get_logger(consts.LOG_F_NAME)
         self.consts = consts
 
     def train(self):

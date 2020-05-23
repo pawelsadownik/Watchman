@@ -1,11 +1,11 @@
 import logging
 
 
-def get_logger(consts):
+def get_logger(log_f_name):
     logging.basicConfig()
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
-    # TODO: validate whether pointed path exists
-    file_handler = logging.FileHandler(consts.LOG_F_PATH)
+    file_handler = logging.FileHandler(log_f_name)
     logger.addHandler(file_handler)
+
     return logger
