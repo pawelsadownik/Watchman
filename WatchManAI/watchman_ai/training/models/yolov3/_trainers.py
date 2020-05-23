@@ -19,9 +19,6 @@ def train(net, train_data_loader, val_data_loader, eval_metric, ctx, num_samples
     params = {'wd': consts.WD, 'momentum': consts.MOMENTUM, 'lr_scheduler': lr_scheduler}
     net_optimizer = gluon.Trainer(net.collect_params(), 'sgd', params, kvstore='local', update_on_kvstore=None)
 
-    sigmoid_ce = gluon.loss.SigmoidBinaryCrossEntropyLoss(from_sigmoid=False)
-    l1_loss = gluon.loss.L1Loss()
-
     obj_metrics = mx.metric.Loss('ObjLoss')
     center_metrics = mx.metric.Loss('BoxCenterLoss')
     scale_metrics = mx.metric.Loss('BoxScaleLoss')
