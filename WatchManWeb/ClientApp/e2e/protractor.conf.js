@@ -10,7 +10,7 @@ exports.config = {
     browserName: "chrome"
   },
   directConnect: true,
-  baseUrl: "http://localhost:4200/",
+  baseUrl: "https://localhost:5001/", //ignored if ng e2e
   framework: "jasmine",
   jasmineNodeOpts: {
     showColors: true,
