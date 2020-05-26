@@ -1,6 +1,6 @@
 import { browser, by, element } from "protractor";
 import { HomePage } from "./home.po";
-import { Page } from "./page"
+import { Page } from "./page.po"
 
 export class LoginPage extends Page {
     

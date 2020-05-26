@@ -1,5 +1,5 @@
 import { browser, element, by } from "protractor";
-import { Page } from "./page";
+import { Page } from "./page.po";
 
 export class MonitoringPage extends Page {
     

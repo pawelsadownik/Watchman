@@ -14,7 +14,7 @@ export abstract class Page {
   analysisUrl = '/analysis';
   reportsUrl = '/reports';
   usersUrl = '/users/list';
-  userUrl = '/users/details';
+  userDetailsUrl = '/users/details';
 
   navHome = element(by.css(`#main-nav a[href='${this.homeUrl}'`));
   navLogin = element(by.css(`#main-nav a[href='${this.loginUrl}'`));
@@ -25,6 +25,8 @@ export abstract class Page {
 
   btnLogout = element(by.id("btn-logout"));
   currentUser = element(by.id("current-user"));
+
+  testFirstName = 'Test';
   
   getCurrentUser() {
     return this.currentUser;
