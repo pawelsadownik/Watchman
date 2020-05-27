@@ -7,10 +7,14 @@ exports.config = {
   allScriptsTimeout: 11000,
   specs: ["./src/**/*.e2e-spec.ts"],
   capabilities: {
-    browserName: "chrome"
+    browserName: "chrome",
+    //Chrome Headless
+    chromeOptions: {
+      args: ["--headless", "--disable-gpu", "--window-size=1920x1080"]
+    }
   },
   directConnect: true,
-  baseUrl: "http://localhost:4200/",
+  baseUrl: "https://localhost:5001/", //ignored if ng e2e
   framework: "jasmine",
   jasmineNodeOpts: {
     showColors: true,

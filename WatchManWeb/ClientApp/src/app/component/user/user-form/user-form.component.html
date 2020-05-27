@@ -2,10 +2,10 @@
   <h1>
     Welcome to User Administration
   </h1>
-  <form [formGroup]="form" novalidate (ngSubmit)="onFormSubmit(form.value)">
+  <form id="user-form" [formGroup]="form" novalidate (ngSubmit)="onFormSubmit(form.value)">
     <div class="form-group">
       <label>UserName:</label>
-      <input class="form-control" formControlName="UserName" type="text">
+      <input name="username" class="form-control" formControlName="UserName" type="text">
     </div>
     <div *ngIf="form.controls['UserName'].invalid && (form.controls['UserName'].dirty || form.controls['UserName'].touched)" class="alert alert-danger">
       <div *ngIf="form.controls['name'].errors.required">
@@ -15,7 +15,7 @@
 
     <div class="form-group">
       <label>FirstName:</label>
-      <input class="form-control" formControlName="FirstName" type="text">
+      <input name="first-name" class="form-control" formControlName="FirstName" type="text">
     </div>
     <div *ngIf="form.controls['FirstName'].invalid && (form.controls['FirstName'].dirty || form.controls['FirstName'].touched)" class="alert alert-danger">
       <div *ngIf="form.controls['FirstName'].errors.required">
@@ -25,7 +25,7 @@
 
     <div class="form-group">
       <label>Password:</label>
-      <input class="form-control" formControlName="Password" type="text">
+      <input name="password" class="form-control" formControlName="Password" type="text">
     </div>
     <div *ngIf="form.controls['Password'].invalid && (form.controls['Password'].dirty || form.controls['Password'].touched)" class="alert alert-danger">
       <div *ngIf="form.controls['Password'].errors.required">
@@ -35,7 +35,7 @@
 
     <div class="form-group">
       <label>UserType: BasicUser or AdvancedUser</label>
-      <input class="form-control" formControlName="UserType" type="text">
+      <input name="user-type" class="form-control" formControlName="UserType" type="text">
     </div>
     <div *ngIf="form.controls['UserType'].invalid && (form.controls['UserType'].dirty || form.controls['UserType'].touched)" class="alert alert-danger">
       <div *ngIf="form.controls['UserType'].errors.required">
@@ -43,6 +43,6 @@
       </div>
     </div>
 
-    <button type="submit"[disabled]="form.pristine || form.invalid" class="btn btn-success">Save</button>
+    <button name="save" type="submit"[disabled]="form.pristine || form.invalid" class="btn btn-success">Save</button>
   </form>
 </div>
