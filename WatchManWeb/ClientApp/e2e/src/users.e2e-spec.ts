@@ -17,8 +17,15 @@ describe('Users Page', () => {
         expect(usersPage.btnCreateUser.isPresent()).toBe(true);
     });
 
-    xit('should create test user', () => {
-        expect(usersPage.goToCreateUser().createTestUser().getUser(this.testFirstName).isPresent()).toBe(true);
+    it('should create test user and delete after', () => {
+        expect(usersPage
+            .goToCreateUser()
+            .createTestUser()
+            .btnCreateUser
+            .isPresent()
+        ).toBe(true);
+        expect(usersPage.getUser(usersPage.testUsername).isPresent()).toBe(true);
+        usersPage.deleteUser(usersPage.testUsername);
+        expect(usersPage.getUser(usersPage.testUsername).isPresent()).toBe(false);
     });
-
 });

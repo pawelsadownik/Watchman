@@ -1,15 +1,15 @@
-import { browser, element, by, ElementFinder } from "protractor";
+import { browser, element, by, ElementFinder, protractor } from "protractor";
 import { Page } from "./page.po";
 import { UserDetailsPage } from "./user-details.po";
 
 export class UsersPage extends Page {
 
-    private usernameColNumber = 1;
-    private typeColNumber = 2;
-    private actionColNumber =3;
+    private usernameColNumber = 0;
+    private typeColNumber = 1;
+    private actionColNumber =2;
 
-    private usersTable = element(by.css("p-table table"));
-    private usersTableRaws = element.all(by.css("p-table table tr"));
+    usersTable = element(by.css("p-table tbody"));
+    usersTableRaws = element.all(by.css("p-table tbody tr"));
 
     readonly btnCreateUser = element(by.id("create-user"));
     
@@ -28,21 +28,41 @@ export class UsersPage extends Page {
     }
 
     goToEditUser(uname:string) :UserDetailsPage {
-        this.getUserRaw(uname).all(by.tagName("td")).get(this.actionColNumber).element(by.css("p-button[label='Edit'")).click();
+        this.getUserRaw(uname).then( (userTr) => {
+            userTr.element(by.css("p-button[label='Edit']")).click();
+        });
         return new UserDetailsPage();
     }
-//TODO delete confirmation
-    deleteUser(uname:string) {
-        this.getUserRaw(uname).all(by.tagName("td")).get(this.actionColNumber).element(by.css("p-button[label='Remove'")).click();;
+
+    deleteUser(uname:string) :UsersPage {
+        this.getUserRaw(uname).then( (userTr) => {
+                userTr.element(by.css("td p-button[label='Remove']")).click();
+            });
+        return new UsersPage;
     }
 
-    getUserRaw(uname:string) :ElementFinder {
-        let userRaw = -1;
+    getUserRaw(uname:string) {
+        let userFound = false;
+        let userTr = protractor.promise.defer<ElementFinder>();
+        
         this.usersTableRaws.each( function (raw, rawNumber) {
-            if(raw.element(by.cssContainingText('tr td:first-child', uname)).isPresent())
-                userRaw=rawNumber;
+            raw.element(by.css("td:first-child")).getText()
+                .then( (v) => {
+                    if (v === uname) {
+                        userTr.fulfill(raw);
+                        userFound = true;
+                    }
+                }, (reason) => {
+                    userTr.reject(reason);
+                });
         });
-        if (userRaw=-1) return;
-        return this.usersTableRaws.get(userRaw);
+
+        protractor.promise.controlFlow().execute(function() {
+            if (!userFound) {
+                userTr.reject(`User ${uname} not found in usersTableRaws`);
+            };
+        });
+        
+        return userTr.promise;
     }
 }
