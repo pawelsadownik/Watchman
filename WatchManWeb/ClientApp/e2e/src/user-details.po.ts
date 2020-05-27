@@ -31,7 +31,7 @@ export class UserDetailsPage extends Page {
     }
 
     createTestUser() :UsersPage {
-        this.createUser('test', this.testFirstName, '1234', 'BasicUser');
+        this.createUser(this.testUsername, this.testFirstName, '1234', 'BasicUser');
         return new UsersPage();
     }
 }

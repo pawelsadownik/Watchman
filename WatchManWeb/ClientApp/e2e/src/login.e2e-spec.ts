@@ -14,10 +14,13 @@ describe('Login Page', () => {
     });
 
     it('should login as admin', () => {
-        loginPage.get();
-        loginPage.doAdminLogin();
+        loginPage.get().doAdminLogin();
         expect(browser.getTitle()).toEqual('WATCHMAN');
+        expect(loginPage.getCurrentUser().getText()).toContain('admin');
         loginPage.logOut();
+        expect(loginPage.getLoginForm().isPresent()).toBe(true);
+        expect(loginPage.getCurrentUser().isPresent()).toBe(false);
+
     });
 
 });

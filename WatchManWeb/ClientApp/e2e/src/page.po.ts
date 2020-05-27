@@ -26,7 +26,8 @@ export abstract class Page {
   btnLogout = element(by.id("btn-logout"));
   currentUser = element(by.id("current-user"));
 
-  testFirstName = 'Test';
+  testUsername :string = 'test';
+  testFirstName :string = 'Test';
   
   getCurrentUser() {
     return this.currentUser;
