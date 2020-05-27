@@ -3,6 +3,8 @@ using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using WatchmanWeb.Model;
 using WatchmanWeb.Services;
 using WatchmanWeb.ViewModel;
 
@@ -16,7 +18,8 @@ namespace WatchmanWeb.Controllers
         private readonly IMapper _mapper;
         private IConverter _converter;
 
-        public IncidentsController(IIncidentService incidentService, IMapper mapper, IConverter converter, IPdfService pdfService)
+        public IncidentsController(IIncidentService incidentService, 
+            IMapper mapper, IConverter converter, IPdfService pdfService)
         {
             _incidentService = incidentService;
             _mapper = mapper;
@@ -29,6 +32,16 @@ namespace WatchmanWeb.Controllers
         {
             return _mapper.Map<List<IncidentVM>>(_incidentService.GetAll());
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] IncidentVM incidentVM)
+        {
+            var incident = _mapper.Map<Incident>(incidentVM);
+
+            _incidentService.Add(incident);
+            return Created("/api/Incident", _mapper.Map<IncidentVM>(incident).Id);
+        }
+
 
         [HttpGet("pdfcreator")]
         public IActionResult CreatePDF()
