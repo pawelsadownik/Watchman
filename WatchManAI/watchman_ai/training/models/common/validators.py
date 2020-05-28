@@ -4,6 +4,9 @@ from gluoncv.utils.metrics.coco_detection import COCODetectionMetric
 
 
 def get_coco_validation_metric(val_data, consts):
+    """
+    Returns validation metric checker for COCO dataset.
+    """
     val_metric = COCODetectionMetric(val_data,
                                      consts.VAL_METRIC_F_NAME,
                                      cleanup=True,
@@ -13,6 +16,9 @@ def get_coco_validation_metric(val_data, consts):
 
 
 def validate_topology_coco(net, val_data_loader, ctx, eval_metric):
+    """
+    Validates network model at current state and returns results with respect to evaluation metrics.
+    """
     eval_metric.reset()
     net.set_nms(nms_thresh=0.45, nms_topk=400)
     mx.nd.waitall()

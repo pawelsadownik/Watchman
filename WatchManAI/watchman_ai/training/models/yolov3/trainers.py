@@ -2,10 +2,31 @@ import time
 import mxnet as mx
 from mxnet import gluon, autograd
 from gluoncv.utils import LRScheduler, LRSequential
-from watchman_ai.training.models.common import _serializers, _validators
+from watchman_ai.training.models.common import serializers, validators
 
 
 def train(net, train_data_loader, val_data_loader, eval_metric, ctx, num_samples, consts, logger):
+    """
+    Runs YOLOv3 training for requested number of epochs.
+
+    :param net: YOLOv3 topology representation
+    :param train_data_loader: data loader which feeds network with training data
+    :param val_data_loader: data loader which feeds network with validation data
+    :param eval_metric: detection metrics for COCO dataset
+    :param ctx: list of execution devices representations
+    :param num_samples: number of training data samples
+    :param consts: object with model parameters as it's attributes
+    :param logger: logging tool
+
+    :type net: gluoncv.model_zoo.YOLOV3
+    :type train_data_loader: gluon.data.DataLoader
+    :type val_data_loader: gluon.data.DataLoader
+    :type eval_metric: gluoncv.utils.metrics.coco_detection.COCODetectionMetric
+    :type ctx: list(mxnet.context.Context)
+    :type num_samples: int
+    :type consts: Consts
+    :type logger: logging.Logger
+    """
     net.collect_params().reset_ctx(ctx)
     warmup_epoch = 0
     lr_decay_epoch = [int(i) for i in consts.LR_DECAY_EPOCH]
@@ -82,11 +103,11 @@ def train(net, train_data_loader, val_data_loader, eval_metric, ctx, num_samples
                     f'{scale_name}={scale_loss}, {cls_name}={cls_loss}')
 
         if not epoch % consts.VAL_INTERVAL or not epoch % consts.SAVE_INTERVAL:
-            mean_avg_prec_name, mean_avg_prec = _validators.validate_topology_coco(net, val_data_loader, ctx, eval_metric)
+            mean_avg_prec_name, mean_avg_prec = validators.validate_topology_coco(net, val_data_loader, ctx, eval_metric)
             val_msg = '\n'.join([f'{k}={v}' for k, v in zip(mean_avg_prec_name, mean_avg_prec)])
             logger.info(f'[Epoch {epoch}] validation: \n{val_msg}')
             curr_mean_avg_prec = float(mean_avg_prec[-1])
         else:
             curr_mean_avg_prec = 0
 
-        _serializers.save_params(net, best_mean_avg_prec, curr_mean_avg_prec, epoch, consts.SAVE_INTERVAL, consts.SAVE_PREFIX)
+        serializers.save_params(net, best_mean_avg_prec, curr_mean_avg_prec, epoch, consts.SAVE_INTERVAL, consts.SAVE_PREFIX)

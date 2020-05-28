@@ -1,9 +1,15 @@
 def load_params(net, async_net, params_path):
+    """
+    Loads stored weights in provided networks.
+    """
     net.load_parameters(params_path)
     async_net.load_parameters(params_path)
 
 
 def save_params(net, best_mean_avg_prec, curr_mean_avg_prec, epoch, save_interval, prefix):
+    """
+    Saves weights and statistics from current model state.
+    """
     curr_mean_avg_prec = float(curr_mean_avg_prec)
 
     if curr_mean_avg_prec > best_mean_avg_prec[0]:

@@ -5,6 +5,15 @@ from gluoncv.data.transforms.presets.yolo import YOLO3DefaultTrainTransform, YOL
 
 
 def get_coco_data_holders(consts):
+    """
+    Returns data holders which represents val/train data stored in hard disk
+    (specifically for YOLOv3 topology).
+
+    :param consts: object with attributes which points data path
+    :type consts: Consts
+    :return: data holders for both training and validation data
+    :rtype: tuple(gluoncv.data.COCODetection, gluoncv.data.COCODetection)
+    """
     train_data = _get_coco_train_data(consts)
     val_data = _get_coco_val_data(consts)
 
@@ -24,6 +33,23 @@ def _get_coco_val_data(consts):
 
 
 def get_coco_data_loaders(net, train_data, val_data, consts):
+    """
+    Returns data loaders, which can feed network in proper way
+    (specifically for YOLOv3 topology).
+
+    :param net: YOLOv3 topology representation
+    :param train_data: training data holder
+    :param val_data: validation data holder
+    :param consts: object with attributes which configures way of providing data (like batch size)
+
+    :type net: gluoncv.model_zoo.YOLOV3
+    :type train_data: gluoncv.data.COCODetection
+    :type val_data: gluoncv.data.COCODetection
+    :type consts: Consts
+
+    :return: data loaders for both training and validation step
+    :rtype: tuple(mxnet.gluon.data.DataLoader, mxnet.gluon.data.DataLoader)
+    """
     in_size = consts.IN_SIZE
     bs = consts.BATCH_SIZE
     n_workers = consts.NUM_WORKERS
