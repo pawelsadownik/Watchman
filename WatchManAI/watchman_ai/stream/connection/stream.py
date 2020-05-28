@@ -7,7 +7,10 @@ from watchman_ai.stream.tools import alarm
 
 
 class Streamer:
-
+    """
+    Represents http server which serves processed video.
+    Streams video which comes from ip camera, local camera or video file.
+    """
     available_addresses = [
         ('127.0.0.1', 8080),
         ('127.0.0.2', 8081),
@@ -16,6 +19,22 @@ class Streamer:
     ]
 
     def __init__(self, video_source, video_info, alarm_addr, fps_limit, cmp_server_addr):
+        """
+        Creates Streamer instance.
+
+        :param video_source: str which describes video source - could be ip address, video file name
+                             or local camera id
+        :param video_info: information about camera, for example: physical localization of ip camera
+        :param alarm_addr: address on which should be send alarm (by POST request)
+        :param fps_limit: maximum number of frames per second
+        :param cmp_server_addr: address of computational server on which video will be processed
+
+        :type video_source: str
+        :type video_info: str
+        :type alarm_addr: str
+        :type fps_limit: int
+        :type cmp_server_addr: str
+        """
         assert len(Streamer.available_addresses) > 0, 'Lack of available streaming spots.'
         address = Streamer.available_addresses.pop(0)
         video = Video(video_source, fps_limit, cmp_server_addr)
@@ -23,6 +42,9 @@ class Streamer:
         self.streamer = _ThreadedVideoStreamer(address, _VideoStreamer, video, video_info, alarm_addr, delay)
 
     def run(self):
+        """
+        Runs streamer forever.
+        """
         self.streamer.run()
 
 
@@ -35,10 +57,10 @@ class _VideoStreamer(BaseHTTPRequestHandler):
 
             while True:
                 tic = time.time()
-                jpg, err, alarm = self.server.get_frame_info()  # TODO: handle alarm
+                jpg, err, err_type = self.server.get_frame_info()  # TODO: handle alarm
                 if err:
                     timestamp = ''  # TODO: create proper timestamp
-                    alarm.raise_alarm(self.server.alarm_addr, self.server.video_info, alarm, timestamp)
+                    alarm.raise_alarm(self.server.alarm_addr, self.server.video_info, err_type, timestamp)
                 toc = time.time()
                 t_diff = toc - tic
                 if t_diff < self.server.delay:

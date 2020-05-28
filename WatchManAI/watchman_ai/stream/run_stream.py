@@ -4,6 +4,19 @@ import sys
 from watchman_ai.stream.connection.stream import Streamer
 
 
+"""
+Runs video streamer.
+
+:Example:
+run video streamer with file as source:
+    python3 run_stream.py --video_source='video.mp4' --notification_addr='127.0.0.1'
+    --info='file'
+run video streamer with local camera as source:
+    python3 run_stream.py --video_source='0' --notification_addr='127.0.0.1'
+    --info='local camera' --local_camera
+"""
+
+
 WATCHMAN_AI_ROOT_PATH = os.environ.get('WATCHMAN_AI_ROOT_PATH', '~/watchman/WatchManAI')
 if not os.path.exists(WATCHMAN_AI_ROOT_PATH):
     print('You need to set up correct WATCHMAN_AI_ROOT_PATH!', file=sys.stderr)
