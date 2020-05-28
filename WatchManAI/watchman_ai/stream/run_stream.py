@@ -15,7 +15,11 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Processed video streamer program.')
 
     parser.add_argument('--video_source', type=str, required=True, dest='SOURCE',
-                        help='Source of video to be processed. Could be one of [file, ip camera].')
+                        help='Source of the video to be processed. Could be one of [file, ip camera].')
+    parser.add_argument('--notification_addr', type=str, required=True, dest='NOTIF_ADDR',
+                        help='End point on which alarm should be sent.')
+    parser.add_argument('--info', type=str, dest='INFO', required=True,
+                        help='Information about video source info. For camera it could be location.')
     parser.add_argument('--cmp_server_addr', type=str, default='', dest='SERVER_ADDR',
                         help='Address to computation server.')  # TODO: add default server address
     parser.add_argument('--local_camera', action='store_true', dest='LOCAL_CAMERA',
@@ -29,5 +33,5 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     source = int(args.SOURCE) if args.LOCAL_CAMERA else args.SOURCE
-    stream = Streamer(source, args.FPS_LIMIT, args.SERVER_ADDR)
+    stream = Streamer(source, args.INFO, args.NOTIF_ADDR, args.FPS_LIMIT, args.SERVER_ADDR)
     stream.run()  # TODO: find way to graceful server kill

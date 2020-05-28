@@ -3,6 +3,7 @@ import http
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from socketserver import ThreadingMixIn
 from watchman_ai.stream.tools.video import Video
+from watchman_ai.stream.tools import alarm
 
 
 class Streamer:
@@ -14,12 +15,12 @@ class Streamer:
         ('127.0.0.4', 8083)
     ]
 
-    def __init__(self, video_source, fps_limit, cmp_server_addr):
+    def __init__(self, video_source, video_info, alarm_addr, fps_limit, cmp_server_addr):
         assert len(Streamer.available_addresses) > 0, 'Lack of available streaming spots.'
         address = Streamer.available_addresses.pop(0)
         video = Video(video_source, fps_limit, cmp_server_addr)
         delay = 1. / fps_limit
-        self.streamer = _ThreadedVideoStreamer(address, _VideoStreamer, video, delay)
+        self.streamer = _ThreadedVideoStreamer(address, _VideoStreamer, video, video_info, alarm_addr, delay)
 
     def run(self):
         self.streamer.run()
@@ -34,7 +35,10 @@ class _VideoStreamer(BaseHTTPRequestHandler):
 
             while True:
                 tic = time.time()
-                jpg, alarm = self.server.get_frame_info()  # TODO: handle alarm
+                jpg, err, alarm = self.server.get_frame_info()  # TODO: handle alarm
+                if err:
+                    timestamp = ''  # TODO: create proper timestamp
+                    alarm.raise_alarm(self.server.alarm_addr, self.server.video_info, alarm, timestamp)
                 toc = time.time()
                 t_diff = toc - tic
                 if t_diff < self.server.delay:
@@ -56,10 +60,12 @@ class _VideoStreamer(BaseHTTPRequestHandler):
 
 class _ThreadedVideoStreamer(ThreadingMixIn, HTTPServer):
 
-    def __init__(self, server_addr, streamer_class, video_source, delay):
+    def __init__(self, server_addr, streamer_class, video_source, video_info, alarm_addr, delay):
         HTTPServer.__init__(self, server_addr, streamer_class)
         ThreadingMixIn.__init__(self)
         self.video = video_source
+        self.video_info = video_info
+        self.alarm_addr = alarm_addr
         self.delay = delay
 
     def get_frame_info(self):

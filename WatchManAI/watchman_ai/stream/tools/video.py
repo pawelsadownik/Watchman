@@ -18,7 +18,7 @@ class Video:
             img = Image.fromarray(img)
         else:
             img = None  # TODO: change to exception
-        return img, ''  # TODO: return real flag
+        return img, False, ''  # TODO: return real flag and error
 
     def __del__(self):
         self.capture.release()
